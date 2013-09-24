@@ -106,15 +106,15 @@ class Recipe(ContentBaseModel):
         verbose_name_plural = _(u'食譜')
         
 class RecipePicture(PictureBase):
-    recipe = models.ForeignKey(Recipe, verbose_name = u'', related_name='Recipe_images')
+    recipe = models.ForeignKey(Recipe, verbose_name = u'食譜')
     class Meta:
         verbose_name = u'食譜照片'
         verbose_name_plural = u'食譜照片'
         
         
 class RecipeUtensil(models.Model):
-    recipe = models.ForeignKey(Recipe, verbose_name = u'', related_name='Recipe_images')
-    name = models.CharField(u'用具', blank=True, null=True)
+    recipe = models.ForeignKey(Recipe, verbose_name = u'食譜')
+    name = models.CharField(u'用具', blank=True, null=True, max_length=50)
     quantity = models.IntegerField(u'單位數量', blank=True, null=True, validators=[MinValueValidator(0)])
     unit = models.CharField(u'單位', blank=True, null=True, max_length=50)
     class Meta:
@@ -122,8 +122,8 @@ class RecipeUtensil(models.Model):
         verbose_name_plural = u'用具清單'
         
 class RecipeFood(models.Model):
-    recipe = models.ForeignKey(Recipe, verbose_name = u'', related_name='Recipe_images')
-    name = models.CharField(u'食材', blank=True, null=True)
+    recipe = models.ForeignKey(Recipe, verbose_name = u'食譜')
+    name = models.CharField(u'食材', blank=True, null=True, max_length=50)
     quantity = models.IntegerField(u'單位數量', blank=True, null=True, validators=[MinValueValidator(0)])
     unit = models.CharField(u'單位', blank=True, null=True, max_length=50)
     class Meta:
@@ -131,10 +131,12 @@ class RecipeFood(models.Model):
         verbose_name_plural = u'食材清單'
 
 class RecipeStep(PictureBase):
-    recipe = models.ForeignKey(Recipe, verbose_name = u'', related_name='Recipe_images')
+    recipe = models.ForeignKey(Recipe, verbose_name = u'食譜')
     order = models.IntegerField(u'步驟', blank=True, null=True, validators=[MinValueValidator(0)])
     text = models.CharField(u'文字敘述', blank=True, null=True, max_length=50)
     class Meta:
         verbose_name = u'步驟'
         verbose_name_plural = u'作法步驟'
-        
+
+class Product(ContentBaseModel):
+    
